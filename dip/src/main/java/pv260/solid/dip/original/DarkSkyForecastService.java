@@ -28,8 +28,7 @@ public class DarkSkyForecastService implements ForecastInterface{
         this.jsonParser = new Gson();
     }
 
-    //@Override
-
+    @Override
     public double getAverageTemperatureForTomorrow() throws Exception{
         if(!locationSet) throw new IOException("Location was not set yet");
         DarkSkyForecastResponse.DailyData tomorrowRecord = this.        tomorrowsWeatherRecord();
