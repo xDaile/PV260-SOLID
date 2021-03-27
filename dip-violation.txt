@@ -1,0 +1,6 @@
+DIP je porušený v triedach RecommendedLunchService a RecommendedOutfitService. Obe tieto triedy používajú v podstate dotaz na priemernú metódu pre zajtrajšok,
+no zároveň z časti riešia volanie API pre zistenie danej teploty. Preto som vytvoril interface ktorý obsahuje metódu getAverageTomorrowTemperature. Tento interface následne
+obe pôvodné triedy vracajúce záznam o počasí implementujú. Bude možné pridať metódu k interfacu ak by som chcel napríklad najmenšiu/najvyššiu atd teplotu z následujúceho dňa.
+Vytvorením interfacu sme definovali rozhranie, a tým pádom oddelili implementáciu odporúčania oblečenia/obeda od danej služby pre predpoveď počasia.
+
+Taktiež by bolo vhodné vytvoriť interface pre poskytované služby

@@ -11,20 +11,13 @@ import pv260.solid.dip.original.model.OpenWeatherMapResponse.Temperature;
 
 import java.io.IOException;
 
-public class RecommendedOutfitService {
+public class RecommendedOutfitService implements RecommendedService{
 
-    private final OpenWeatherMapService weatherService;
-
-    public RecommendedOutfitService() {
-        this.weatherService = new OpenWeatherMapService();
+    @Override
+    public String recomendationForTomorrow(double averageTomorrowTemperature) throws IOException {
+         return getOutfit(averageTomorrowTemperature);
     }
 
-    public String recommendOutfitForTomorrow() throws IOException {
-        double averageTemperature = this.weatherService.getAverageTemperatureForTomorrow();
-        return getOutfit(averageTemperature);
-
-
-    }
 
     private String getOutfit( double averageTemperature){
         if (averageTemperature < -10) {
@@ -39,17 +32,6 @@ public class RecommendedOutfitService {
             return "It will be really hot, better grab a swimsuit and run to the beach!";
         }
     }
-    /*
-    private double findTomorrowsAverageTemperature() throws IOException {
-        OpenWeatherMapService temperatureService=new OpenWeatherMapService();
-        return temperatureService.getAverageTemperatureForTomorrow();
-       /* Temperature tomorrowTemperature = this.obtainTomorrowTemperatureRecord();
-        return (tomorrowTemperature.getMorn()
-                + tomorrowTemperature.getDay()
-                + tomorrowTemperature.getEve()) / 3;
-    }
-
-*/
 
 
 
