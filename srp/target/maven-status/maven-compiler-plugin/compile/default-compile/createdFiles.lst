@@ -1,0 +1,6 @@
+pv260/solid/srp/original/Product.class
+pv260/solid/srp/original/Main.class
+pv260/solid/srp/original/pages/OrderPageConstructor.class
+pv260/solid/srp/original/pages/ConfirmationPageConstructor.class
+pv260/solid/srp/original/servlets/ConfirmationServlet.class
+pv260/solid/srp/original/servlets/OrderServlet.class

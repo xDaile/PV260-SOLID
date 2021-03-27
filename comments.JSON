@@ -1,0 +1,26 @@
+[
+	{
+		"Comment": {
+			"Author": "Pepa Zdepa",
+			"Entered": "Wed Mar 24 16:16:59 CET 2021",
+			"HeadLine": "My comment",
+			"Text": "This is interesting..."
+		}
+	},
+	{
+		"Comment": {
+			"Author": "Pepa Zdepa",
+			"Entered": "Wed Mar 24 16:17:17 CET 2021",
+			"HeadLine": "My comment",
+			"Text": "This is interesting..."
+		}
+	},
+	{
+		"Comment": {
+			"Author": "Pepa Zdepa",
+			"Entered": "Wed Mar 24 16:20:12 CET 2021",
+			"HeadLine": "My comment",
+			"Text": "This is interesting..."
+		}
+	}
+]
