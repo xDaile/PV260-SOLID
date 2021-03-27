@@ -1,0 +1,12 @@
+SimpleSerializer.java :10. line - Array of arrays are not permissible
+Object Friend prejde vždy pretože neobsahuje array of arrays field, no object BitMapPicture spôsobí problémy pri serializácií na csv
+JSONSerializer si dokázal s týmto poradiť, no CSVSerializer spadne pri metóde deserializeFrom
+porušenie LSP spočíva v tom, že očakávame rovnaké fungovanie ako JSONSerializer, pričom tento zvolnil podmienky pre vstup oproti SimpleSerializeru. Tým pádom nie je chyba v CSVSerializeri ale v použití ich oboch, a to s objektom ktorý obsahuje pole polí - objekt pre ktorý nie je zaručené fungovanie podľa dokumentácie v SimpleSerializer(trieda z ktorej zvyšné serializéry dedia).
+
+v odovzdanom riešení je navrhnuté riešenie, kedy miesto 2d poľa, je v 1d poli uložený oddeľovač \n čo spôsobí očakávané chovanie, 
+taktiež som narazil na problém s použitím typu char, skúsil som tento typ zameniť za typ Character - bez zlepšenia, 1d String pole funguje v poriadku.
+
+
+podmienka  X.equals(serialize(deserialize(X))) == true je porušená pri použití znakov 漢語, a üç v slove Türkçe, pri použití kompresie. Problémom je že interface SimpleSerializer dostatočne nedefinuje podmienky pre vstup. CompressingSerializer prevádza utf8 znak na ascii -> no nedokáže previezť znaky vyššie spomenuté späť do utf8
+LSP violation je tu v podobe kedy CompressingSerializer sprísnil podmienky vstupu - zmenšil množinu vstupov ktoré dokáže spracovať
+
