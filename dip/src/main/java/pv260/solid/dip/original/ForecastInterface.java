@@ -6,6 +6,7 @@ import pv260.solid.dip.original.model.OpenWeatherMapResponse;
 import java.io.IOException;
 
 public interface ForecastInterface {
-    double getAverageTemperatureForTomorrow() throws IOException;
+    double getAverageTemperatureForTomorrow() throws Exception;
+    void setLocation(double longitude, double latitude);
 
 }

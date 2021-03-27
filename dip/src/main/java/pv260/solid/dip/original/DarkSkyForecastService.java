@@ -19,7 +19,9 @@ public class DarkSkyForecastService implements ForecastInterface{
     private static final String API_KEY = "fc2a39c15866166ea203cabadf93a236";
 
     private static final int CONNECTION_TIMEOUT = 500;
-
+    private double longitude;
+    private double latitude;
+    private boolean locationSet=false;
     private Gson jsonParser;
 
     public DarkSkyForecastService() {
@@ -27,25 +29,32 @@ public class DarkSkyForecastService implements ForecastInterface{
     }
 
     //@Override
+
+    public double getAverageTemperatureForTomorrow() throws Exception{
+        if(!locationSet) throw new IOException("Location was not set yet");
+        DarkSkyForecastResponse.DailyData tomorrowRecord = this.        tomorrowsWeatherRecord();
+        return (tomorrowRecord.getTemperatureMin()+tomorrowRecord.getTemperatureMax()) /2;
+    }
+
+    @Override
+    public void setLocation(double longitude, double latitude) {
+        this.longitude=longitude;
+        this.latitude=latitude;
+        this.locationSet=true;
+    }
+
     private DarkSkyForecastResponse query() throws IOException {
         URL remote = new URL(buildUrl(API_KEY,
-                                      targetLongitude(),
-                                      targetLatitude(),
-                                      targetTime(),
-                                      "units=si"));
+                this.longitude,
+                this.latitude,
+                targetTime(),
+                "units=si"));
         HttpURLConnection connection = (HttpURLConnection) remote.openConnection();
         connection.setConnectTimeout(CONNECTION_TIMEOUT);
         try (Reader responseReader = new InputStreamReader(connection.getInputStream(), UTF_8)) {
             return jsonParser.fromJson(responseReader, DarkSkyForecastResponse.class);
         }
     }
-
-    public double getAverageTemperatureForTomorrow() throws IOException{
-        DarkSkyForecastResponse.DailyData tomorrowRecord = this.        tomorrowsWeatherRecord();
-        return (tomorrowRecord.getTemperatureMin()+tomorrowRecord.getTemperatureMax()) /2;
-    }
-
-
 
     private String buildUrl(String apiKey, double longitude, double latitude, String time, String... queryParams) {
         StringBuilder request =
@@ -71,13 +80,6 @@ public class DarkSkyForecastService implements ForecastInterface{
                             .format(DateTimeFormatter.ISO_DATE_TIME);
     }
 
-    private static double targetLongitude() {
-        return 49.1973419;
-    }
-
-    private static double targetLatitude() {
-        return 16.6050103;
-    }
 
 
 

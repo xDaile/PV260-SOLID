@@ -15,24 +15,17 @@ public class RecommendedOutfitService implements RecommendedService{
 
     @Override
     public String recomendationForTomorrow(double averageTomorrowTemperature) throws IOException {
-         return getOutfit(averageTomorrowTemperature);
-    }
-
-
-    private String getOutfit( double averageTemperature){
-        if (averageTemperature < -10) {
+        if (averageTomorrowTemperature < -10) {
             return "It will be super cold, weak a jacket or two!";
-        } else if (averageTemperature < 0) {
+        } else if (averageTomorrowTemperature < 0) {
             return "It will be rather chilly, better wear a coat.";
-        } else if (averageTemperature < 15) {
+        } else if (averageTomorrowTemperature < 15) {
             return "Weather will be very pleasant, weak a light jacket and jeans.";
-        } else if (averageTemperature < 25) {
+        } else if (averageTomorrowTemperature < 25) {
             return "Tomorrow will be a beautiful day, shirt and shorts should be fine.";
         } else {
             return "It will be really hot, better grab a swimsuit and run to the beach!";
         }
     }
-
-
 
 }

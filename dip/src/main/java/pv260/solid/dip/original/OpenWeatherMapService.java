@@ -18,10 +18,14 @@ public class OpenWeatherMapService implements ForecastInterface {
     private static final String API_KEY = "44db6a862fba0b067b1930da0d769e98";
 
     private static final int CONNECTION_TIMEOUT = 500;
+    private double longitude;
+    private double latitude;
 
     private JAXBContext jaxb;
+    private boolean locationSet=false;
 
     public OpenWeatherMapService() {
+
         try {
             this.jaxb = JAXBContext.newInstance(OpenWeatherMapResponse.class);
         } catch (JAXBException e) {
@@ -30,18 +34,26 @@ public class OpenWeatherMapService implements ForecastInterface {
     }
 
     @Override
-    public double getAverageTemperatureForTomorrow() throws IOException {
+    public double getAverageTemperatureForTomorrow() throws Exception {
+        if(!locationSet) throw new IOException("Location was not set yet");
         OpenWeatherMapResponse.Temperature tomorrowTemperature = obtainTomorrowTemperatureRecord();
         return (tomorrowTemperature.getMorn()
                 + tomorrowTemperature.getDay()
                 + tomorrowTemperature.getEve()) / 3;
     }
 
+    @Override
+    public void setLocation(double longitude, double latitude) {
+        this.locationSet=true;
+        this.longitude=longitude;
+        this.latitude=latitude;
+    }
+
     //@Override
-    public OpenWeatherMapResponse query() throws IOException {
+    private OpenWeatherMapResponse query() throws IOException {
         URL remote = new URL(buildUrl(API_KEY,
-                                      targetLatitude(),
-                                      targetLongitude()
+                                      this.latitude,
+                                      this.longitude
                              ));
         HttpURLConnection connection = (HttpURLConnection) remote.openConnection();
         connection.setConnectTimeout(CONNECTION_TIMEOUT);
@@ -68,13 +80,6 @@ public class OpenWeatherMapService implements ForecastInterface {
 
     //these would be other services this depends on
 
-    private static double targetLongitude() {
-        return 49.1973419;
-    }
-
-    private static double targetLatitude() {
-        return 16.6050103;
-    }
 
     private OpenWeatherMapResponse.Temperature obtainTomorrowTemperatureRecord() throws IOException {
         OpenWeatherMapResponse tomorrowWeather = this.query();
